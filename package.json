@@ -1,9 +1,9 @@
 {
-  "name": "ton-starter-twa-vite",
+  "name": "ton-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://alefmanvladimir.github.io/my-twa",
+  "homepage": "https://Bazylevych.github.io/my-twa",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
