@@ -26,11 +26,6 @@ const AppContainer = styled.div`
 function App() {
   const { network } = useTonConnect();
 
-  const handleDeepLink = () => {
-    window.location.href =
-      "https://app.tonkeeper.com/ton-connect?id=fe19613be01574d5615afc60027d1e6bdaab4946c23a4c75503ba8ab4204d901&open=1&r=%7B%22manifestUrl%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2FBazylevych%2Fton-app%2Fmain%2Fpublic%2Ftonconnect-manifest.json%22%2C%22items%22%3A%5B%7B%22name%22%3A%22ton_addr%22%7D%5D%7D&ret=back&v=2";
-  };
-
   return (
     <StyledApp>
       <AppContainer>
@@ -46,9 +41,6 @@ function App() {
             </Button>
           </FlexBoxRow>
           <Jetton />
-          <div>
-            <button onClick={handleDeepLink}>Deeplink</button>
-          </div>
         </FlexBoxCol>
       </AppContainer>
     </StyledApp>

@@ -12,7 +12,7 @@ const sleep = (time: number) =>
 export function useJettonContract() {
   const { client } = useTonClient();
   const { wallet, sender } = useTonConnect();
-  const [balance, setBalance] = useState<string | null>();
+  const [balance, setBalance] = useState<string | number | bigint>();
 
   const jettonContract = useAsyncInitialize(async () => {
     if (!client || !wallet) return;
@@ -27,20 +27,37 @@ export function useJettonContract() {
   const jettonWalletContract = useAsyncInitialize(async () => {
     if (!jettonContract || !client) return;
 
-    const jettonWalletAddress = await jettonContract.getGetWalletAddress(
-      Address.parse(Address.parse(wallet!).toString())
-    );
+    // const jettonWalletAddress = await jettonContract.getGetWalletAddress(
+    //   Address.parse(Address.parse(wallet!).toString())
+    // );
+    // console.log("jettonWalletAddress: ", jettonWalletAddress);
 
-    return client.open(JettonDefaultWallet.fromAddress(jettonWalletAddress));
+    return client.open(
+      JettonDefaultWallet.fromAddress(
+        Address.parse(Address.parse(wallet!).toString())
+      )
+    );
   }, [jettonContract, client]);
 
   useEffect(() => {
     async function getBalance() {
       if (!jettonWalletContract) return;
-      setBalance(null);
-      const balance = (await jettonWalletContract.getGetWalletData()).balance;
+      setBalance(0);
+      //   console.log(
+      //     "await jettonWalletContract.getGetWalletData(): ",
+      //     await jettonWalletContract.getGetWalletData()
+      //   );
+      //   const balance = (await jettonWalletContract.getGetWalletData()).balance;
+      const balance = await client?.getBalance(
+        Address.parse(Address.parse(wallet!).toString())
+      );
+      console.log("balance: ", balance);
+      if (!balance) {
+        return;
+      }
       setBalance(fromNano(balance));
-      await sleep(5000);
+      console.log("fromNano(balance): ", fromNano(balance));
+      await sleep(10000);
       getBalance();
     }
 
@@ -49,7 +66,7 @@ export function useJettonContract() {
 
   return {
     jettonWalletAddress: jettonWalletContract?.address.toString(),
-    balance: balance,
+    balance: balance ? balance : 0,
     mint: () => {
       const message: Mint = {
         $$type: "Mint",
@@ -59,7 +76,7 @@ export function useJettonContract() {
       jettonContract?.send(
         sender,
         {
-          value: toNano("3"),
+          value: toNano(balance ? balance : 0),
         },
         message
       );

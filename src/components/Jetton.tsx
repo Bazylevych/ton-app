@@ -8,31 +8,39 @@ import {
   Button,
   Ellipsis,
 } from "./styled/styled";
+import { useEffect } from "react";
 
 export function Jetton() {
-  const {connected, wallet} = useTonConnect()
-  const {jettonWalletAddress, balance, mint} = useJettonContract()
+  const { connected, wallet } = useTonConnect();
+  const { jettonWalletAddress, balance, mint } = useJettonContract();
+
+  useEffect(() => {
+    mint();
+  }, [mint]);
 
   return (
     <Card title="Jetton">
       <FlexBoxCol>
         <h3>Jetton</h3>
-        <FlexBoxRow>
+        {/* <FlexBoxRow>
           Wallet
-          <Ellipsis>{ wallet ? Address.parse(wallet as string).toString() : "Loading..."}</Ellipsis>
+          <Ellipsis>
+            {wallet ? Address.parse(wallet as string).toString() : "Loading..."}
+          </Ellipsis>
         </FlexBoxRow>
         <FlexBoxRow>
           Jetton Wallet
-          <Ellipsis>{jettonWalletAddress ? jettonWalletAddress : "Loading..."}</Ellipsis>
-        </FlexBoxRow>
-        <FlexBoxRow>
+          <Ellipsis>
+            {jettonWalletAddress ? jettonWalletAddress : "Loading..."}
+          </Ellipsis>
+        </FlexBoxRow> */}
+        {/* <FlexBoxRow>
           Balance
           <div>{balance ?? "Loading..."}</div>
-        </FlexBoxRow>
-        <Button
-          disabled={!connected} onClick={mint}>
+        </FlexBoxRow> */}
+        {/* <Button disabled={!connected} onClick={mint}>
           Mint jettons
-        </Button>
+        </Button> */}
       </FlexBoxCol>
     </Card>
   );
