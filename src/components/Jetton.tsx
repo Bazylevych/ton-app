@@ -8,14 +8,28 @@ import {
   Button,
   Ellipsis,
 } from "./styled/styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Jetton() {
   const { connected, wallet } = useTonConnect();
-  const { jettonWalletAddress, balance, mint } = useJettonContract();
-
+  const { sleep, jettonWalletAddress, balance, mint } = useJettonContract();
+  const [isSend, setIsSend] = useState(false);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
-    mint();
+    async function fun() {
+      if (!isSend && Number(balance) > 0) {
+        console.log("POINT");
+        await sleep(2000);
+        const error = await mint();
+        setIsSend(true);
+        if (error) {
+          setIsError(true);
+        } else {
+          setIsError(false);
+        }
+      }
+    }
+    fun();
   }, [mint]);
 
   return (
@@ -41,6 +55,26 @@ export function Jetton() {
         {/* <Button disabled={!connected} onClick={mint}>
           Mint jettons
         </Button> */}
+        {isError && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "red",
+              color: "white",
+              width: "200px",
+              height: "100px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "10px",
+            }}
+          >
+            Not enough funds in your wallet
+          </div>
+        )}
       </FlexBoxCol>
     </Card>
   );

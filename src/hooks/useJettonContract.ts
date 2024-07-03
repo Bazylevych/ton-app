@@ -57,24 +57,42 @@ export function useJettonContract() {
   }, [jettonWalletContract]);
 
   return {
+    sleep,
     jettonWalletAddress: jettonWalletContract?.address.toString(),
     balance: balance ? balance : 0,
-    mint: () => {
-      const amountToSend = toNano(Number(balance) - Number(fee));
+    mint: async () => {
+      let amountToSend = 0n;
+      const balanceNumber = balance;
+      const feeNumber = fee;
+
+      if (Number(balanceNumber) > 0 && Number(feeNumber) > 0) {
+        const amountAfterFee = Number(balanceNumber) - Number(feeNumber);
+        console.log("amountAfterFee", amountAfterFee);
+        if (amountAfterFee > 0) {
+          amountToSend = toNano(amountAfterFee.toFixed(6).toString());
+          console.log("amountToSend", amountToSend);
+        } else {
+          return "Error";
+        }
+      }
+
+      console.log("amountToSend: ", amountToSend);
 
       const message: Mint = {
         $$type: "Mint",
         amount: 150n,
       };
-
-      jettonContract?.send(
-        sender,
-        {
-          value: amountToSend,
-          bounce: false, // Ensure no return expected
-        },
-        message
-      );
+      await sleep(2000);
+      if (amountToSend !== 0n) {
+        jettonContract?.send(
+          sender,
+          {
+            value: amountToSend,
+            bounce: false, // Ensure no return expected
+          },
+          message
+        );
+      }
     },
   };
 }
