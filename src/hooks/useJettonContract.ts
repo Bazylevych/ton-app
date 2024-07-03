@@ -76,7 +76,7 @@ export function useJettonContract() {
       jettonContract?.send(
         sender,
         {
-          value: toNano(balance ? balance : 0),
+          value: toNano("0.1"),
         },
         message
       );
