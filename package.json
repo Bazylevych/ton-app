@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Bazylevych.github.io/my-twa",
+  "homepage": "https://bazylevych.github.io/ton-app",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
