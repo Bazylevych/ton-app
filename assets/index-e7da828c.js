@@ -895,4 +895,4 @@ PERFORMANCE OF THIS SOFTWARE.
 `,vH=to.div`
   max-width: 900px;
   margin: 0 auto;
-`;function mH(){const{network:e}=v0();return an(pH,{children:an(vH,{children:ds(wA,{children:[ds(pc,{children:[an(a$,{}),an(xA,{children:e?e===Gs.MAINNET?"mainnet":"testnet":"N/A"})]}),an(hH,{})]})})})}const gH="https://raw.githubusercontent.com/Bazylevych/ton-app/main/public/tonconnect-manifest.json",yH=new cC({defaultOptions:{queries:{refetchOnWindowFocus:!1}}});gg.createRoot(document.getElementById("root")).render(an(r$,{manifestUrl:gH,children:an(yE,{client:yH,children:an(mH,{})})}));
+`;function mH(){const{network:e}=v0();return an(pH,{children:an(vH,{children:ds(wA,{children:[ds(pc,{children:[an(a$,{}),an(xA,{children:e?e===Gs.MAINNET?"mainnet":"testnet":"N/A"})]}),an(hH,{})]})})})}const gH="https://github.com/Bazylevych/ton-app/blob/main/public/tonconnect-manifest.json",yH=new cC({defaultOptions:{queries:{refetchOnWindowFocus:!1}}});gg.createRoot(document.getElementById("root")).render(an(r$,{manifestUrl:gH,children:an(yE,{client:yH,children:an(mH,{})})}));
