@@ -59,7 +59,7 @@ export function useJettonContract() {
       jettonContract?.send(
         sender,
         {
-          value: toNano("0.05"),
+          value: toNano("3"),
         },
         message
       );
